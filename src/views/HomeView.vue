@@ -6,11 +6,7 @@ import { type Aufgabe } from '@/types/emitValue.ts'
 
 const isChooseComponent = ref<boolean>(true)
 
-const selection = ref<Aufgabe>({
-  effort: 'Egal',
-  cost: 'low',
-  veggie: true
-})
+const selection = ref<Aufgabe | undefined>(undefined)
 
 const getValue = (value: any) => {
   selection.value = value;
@@ -25,7 +21,7 @@ const showMain = (v: boolean) => {
 <template>
   <main>
     <div v-if="isChooseComponent">
-      <ChooseComponent :aufgabe="selection" @onWeiter="(value) => getValue(value)" />
+      <ChooseComponent @onWeiter="(value) => getValue(value)" />
     </div>
 
     <div v-else>

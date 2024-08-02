@@ -28,7 +28,7 @@ import data from '@/assets/data'
 const props = defineProps({
   selectedCriteria: {
     type: Object as PropType<Aufgabe>,
-    required: true
+    required: false
   }
 })
 
@@ -37,18 +37,21 @@ const emit = defineEmits(['onBack'])
 const selectedRecipe = ref<Recipe>()
 
 function randomize() {
-  const { effort, cost, veggie } = props.selectedCriteria;
+  if (props.selectedCriteria) {
 
-  const filteredRecipes = data.filter((recipe: Recipe) => {
-    return (
-      (effort === 'Egal' || recipe.effort === effort) &&
-      (cost === 'Egal' || recipe.cost === cost) &&
-      (veggie === 'Egal' || recipe.veggie === veggie)
-    );
-  });
+    const { effort, cost, veggie } = props.selectedCriteria;
 
-  if (filteredRecipes.length > 0) {
-    selectedRecipe.value = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
+    const filteredRecipes = data.filter((recipe: Recipe) => {
+      return (
+        (effort === 'Egal' || recipe.effort === effort) &&
+        (cost === 'Egal' || recipe.cost === cost) &&
+        (veggie === 'Egal' || recipe.veggie === veggie)
+      );
+    });
+
+    if (filteredRecipes.length > 0) {
+      selectedRecipe.value = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
+    }
   } else {
     selectedRecipe.value = {
       name: 'Keine passenden Rezepte gefunden',

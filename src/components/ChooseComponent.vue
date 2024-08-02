@@ -1,16 +1,16 @@
 <template>
   <b-card class="home-view">
     <div class="main-section">
-      <ButtonsGroup title="Aufwand" :buttons="buttons1" id="effort" :active="aufgabe.effort"
+      <ButtonsGroup title="Aufwand" :buttons="buttons1" id="effort" :active="selection.effort"
         @emitData="value => getValue(value)" />
-      <ButtonsGroup title="Preis" :buttons="buttons1" id="cost" :active="aufgabe.cost"
+      <ButtonsGroup title="Preis" :buttons="buttons1" id="cost" :active="selection.cost"
         @emitData="value => getValue(value)" />
-      <ButtonsGroup title="Vegetarisch" :buttons="buttons2" id="veggie" :active="aufgabe.veggie"
+      <ButtonsGroup title="Vegetarisch" :buttons="buttons2" id="veggie" :active="selection.veggie"
         @emitData="value => getValue(value)" />
     </div>
 
     <div class="buttons-footer">
-      <b-button variant='info'>Reset</b-button>
+      <b-button variant='info' @click="reset()">Reset</b-button>
       <b-button variant="success" @click="getRezept()">Weiter</b-button>
     </div>
   </b-card>
@@ -18,35 +18,39 @@
 
 <script setup lang="ts">
 import ButtonsGroup from '@/components/ButtonsGroup.vue'
-import { ref, type PropType } from 'vue'
-import { type EmitValue, type Aufgabe } from '@/types/emitValue.ts'
+import { ref } from 'vue'
+import { type Aufgabe } from '@/types/emitValue.ts'
 
-const props = defineProps({
-  aufgabe: {
-    type: Object as PropType<Aufgabe>,
-    required: true
-  }
-})
-
-
-const emit = defineEmits(['onWeiter'])
+const emit = defineEmits(['onWeiter', 'onReset'])
 
 const buttons1 = ["Egal", "low", "high"]
 const buttons2 = ["Egal", true, false]
 
-const aufgabe = ref<Aufgabe>(props.aufgabe)
+const selection = ref<Aufgabe>({
+  effort: 'Egal',
+  cost: 'low',
+  veggie: true
+})
 
-const getValue = (value: EmitValue) => {
-  console.log(value)
+const getValue = (value: { title: string; id: any }) => {
   const key = value.title.toLowerCase();
-  if (key in aufgabe.value) {
+  if (key in selection.value) {
 
-    aufgabe.value[key] = value.id
+    selection.value[key] = value.id
   }
 }
 
 const getRezept = () => {
-  emit('onWeiter', aufgabe.value)
+  emit('onWeiter', selection.value)
+}
+
+const reset = () => {
+  console.log('selection')
+  selection.value = {
+    effort: 'Egal',
+    cost: 'low',
+    veggie: true
+  }
 }
 </script>
 

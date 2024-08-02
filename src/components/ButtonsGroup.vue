@@ -17,7 +17,7 @@
 </template>
 {{ selectedRecipe.effort === 'low' ? 'Niedrig' : 'Hoch' }}
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, watch } from "vue"
 const props = defineProps<{
   title: string;
   buttons: (string | boolean)[];
@@ -27,7 +27,11 @@ const props = defineProps<{
 
 const emit = defineEmits(['emitData'])
 
-const buttonItem = ref<string | boolean>(props.active ?? '')
+const buttonItem = ref<string | boolean>(props.active)
+
+watch(() => props.active, (newActive) => {
+  buttonItem.value = newActive;
+});
 
 const getItem = (id: string | boolean) => {
   emit('emitData', { title: props.id, id })
