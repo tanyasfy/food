@@ -45,11 +45,10 @@ const getRezept = () => {
 }
 
 const reset = () => {
-  console.log('selection')
   selection.value = {
     effort: 'Egal',
-    cost: 'low',
-    veggie: true
+    cost: 'Egal',
+    veggie: 'Egal'
   }
 }
 </script>
