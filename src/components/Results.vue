@@ -1,6 +1,6 @@
 <template>
   <b-card :title="selectedRecipe?.name ?? 'Keine passenden Rezepte gefunden'" :img-src="selectedRecipe?.image"
-    img-alt="Image" img-top style="max-width: 40rem;" class="mb-2">
+    img-alt="Image" img-top style="width: 30rem;" class="mb-2">
 
 
     <div class="details">
@@ -73,9 +73,13 @@ const back = () => {
 
 <style scoped>
 .actions {
-  width: 30%;
+  width: 50%;
   margin-left: auto;
   display: flex;
   justify-content: space-between;
+}
+
+img {
+  max-height: 10rem;
 }
 </style>

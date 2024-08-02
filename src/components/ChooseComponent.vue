@@ -28,8 +28,8 @@ const buttons2 = ["Egal", true, false]
 
 const selection = ref<Aufgabe>({
   effort: 'Egal',
-  cost: 'low',
-  veggie: true
+  cost: 'Egal',
+  veggie: 'Egal'
 })
 
 const getValue = (value: { title: string; id: any }) => {
